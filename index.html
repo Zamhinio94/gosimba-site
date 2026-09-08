@@ -1,0 +1,641 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Go Simba</title>
+<meta name="description" content="Simba answers the phone, books the engineer, and keeps the job moving on WhatsApp. An AI coworker for UK field service firms. Your team stays in charge.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --page:#F4F3EF; --white:#FFFFFF; --grey:#F6F5F1; --line:#E4E3DC; --line-2:#D6D5CC;
+  --navy:#0A0E5A; --navy-2:#070B3F; --ink:#141633; --ink-2:#5B6180; --ink-3:#8A90A8;
+  --blue:#1E3FBF; --violet:#1E3FBF; --amber:#F2A93B; --amber-2:#FFF1D6; --sky:#FFF1D6; --sky-2:#F5D58A;
+  --wa:#E4F6E9; --wa-ink:#1B5E35;
+  --head:"Manrope","Inter","Helvetica Neue",Arial,sans-serif;
+  --body:"Inter","Helvetica Neue",Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --max:1216px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+body{margin:0;background:var(--page);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+h1,h2,h3{font-family:var(--head);font-weight:700;letter-spacing:-0.035em;margin:0;text-wrap:balance;color:var(--navy)}
+h1{font-size:clamp(40px,5.6vw,72px);line-height:1.02}
+h2{font-size:clamp(32px,4.2vw,56px);line-height:1.04}
+h3{font-size:22px;line-height:1.2;letter-spacing:-0.02em}
+p{margin:0}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+.mono{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
+.btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--body);font-weight:500;font-size:15px;padding:12px 22px;border-radius:999px;text-decoration:none;border:1px solid transparent;cursor:pointer;line-height:1.2;white-space:nowrap;transition:transform .12s}
+.btn-grad{background:var(--navy);color:#fff}
+.btn-grad:after{content:"";width:7px;height:7px;border-radius:50%;background:var(--amber)}
+.btn-grad:hover{background:#151B6E}
+.btn-white{background:#fff;color:var(--navy);border-color:var(--line-2)}
+.btn-white:hover{background:#FAFBFF}
+.btn:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.link{color:var(--blue);text-decoration:none;font-weight:500}
+.link:after{content:" \2197";font-size:.9em}
+
+/* bar */
+.bar{background:var(--navy-2);color:#fff;text-align:center;font-size:13.5px;padding:9px 16px;margin:8px 8px 0;border-radius:10px}
+.bar b{font-weight:600}
+.bar a{text-decoration:none}
+
+/* hero */
+.hero{margin:8px;border-radius:22px;background:#fff;border:1px solid var(--line);position:relative;overflow:hidden}
+.nav{max-width:var(--max);margin:0 auto;padding:22px 24px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center}
+.logo{font-family:var(--head);font-weight:600;font-size:22px;letter-spacing:-0.03em;color:var(--navy);text-decoration:none;display:flex;align-items:center;gap:6px}
+.logo svg{width:20px;height:20px}
+.links{display:flex;gap:30px;font-size:15.5px;font-weight:500;color:var(--navy)}
+.links a{text-decoration:none}
+.nav-r{display:flex;justify-content:flex-end}
+@media (max-width:900px){.links{display:none}.nav{grid-template-columns:1fr auto}}
+.hero-in{max-width:var(--max);margin:0 auto;padding:64px 24px 40px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;align-items:end;min-height:600px}
+@media (max-width:900px){.hero-in{grid-template-columns:1fr;padding-top:48px;min-height:0}}
+.hero-txt{padding-bottom:110px}
+@media (max-width:900px){.hero-txt{padding-bottom:36px}}
+.hero h1{max-width:12ch}
+.hero .sub{font-size:18px;color:var(--ink-2);margin-top:22px;max-width:44ch;line-height:1.5}
+.hero .sub b{font-weight:500;color:var(--navy)}
+.hero .cta{margin-top:34px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.hero .cta small{font-size:13px;color:var(--ink-3)}
+.hero-vis{position:relative;height:540px;display:flex;align-items:flex-end;justify-content:center;background:var(--navy);border-radius:20px;overflow:hidden;background-image:repeating-linear-gradient(135deg,rgba(255,255,255,.05) 0 1px,transparent 1px 14px)}
+.hero-vis .eb{position:absolute;top:22px;left:24px;right:24px;display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#A9AFD6}
+.hero-vis .eb i{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--amber);margin-right:8px;vertical-align:middle}
+@media (max-width:900px){.hero-vis{height:420px}}
+.phone{position:relative;width:300px;background:#060933;border-radius:36px 36px 0 0;padding:14px 12px 0;box-shadow:0 30px 80px rgba(0,0,0,.45);height:440px;overflow:hidden;border:1px solid rgba(255,255,255,.12);border-bottom:0}
+.phone .scr{background:#12174F;border-radius:26px 26px 0 0;height:100%;padding:26px 18px;color:#fff;display:flex;flex-direction:column;gap:14px}
+.phone .st{display:flex;justify-content:space-between;font-size:11px;color:#A9AFD6;font-family:var(--mono)}
+.phone .who{margin-top:20px}
+.phone .who small{display:block;font-size:12px;color:#A9AFD6;letter-spacing:.06em;text-transform:uppercase}
+.phone .who b{display:block;font-family:var(--head);font-weight:500;font-size:26px;letter-spacing:-0.02em;margin-top:6px}
+.phone .who span{display:block;font-size:13px;color:#C9CDEA;margin-top:4px}
+.phone .card{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:12px;font-size:12.5px;line-height:1.45}
+.phone .card .k{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#A9AFD6;margin-bottom:5px}
+.phone .card.hi{background:var(--amber);color:var(--navy-2);border:0}
+.phone .act{margin-top:auto;display:flex;gap:10px}
+.phone .act span{flex:1;text-align:center;padding:12px;border-radius:999px;font-size:13px;font-weight:600;background:rgba(255,255,255,.12)}
+.phone .act span.take{background:#fff;color:var(--navy)}
+.hero .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--ink-2);margin-bottom:22px}
+.hero .eyebrow i{width:7px;height:7px;border-radius:50%;background:var(--amber)}
+.ringme{margin-top:30px;max-width:520px}
+.ringme .fields{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
+@media (max-width:520px){.ringme .fields{grid-template-columns:1fr}}
+.ringme input{font:inherit;font-size:15px;padding:12px 14px;border:1px solid var(--line-2);border-radius:999px;background:#fff;color:var(--ink);width:100%}
+.ringme input:focus{outline:2px solid var(--navy);outline-offset:1px;border-color:var(--navy)}
+.ringme button{width:100%;justify-content:center}
+.ringme .msg{font-size:13px;color:var(--ink-3);margin-top:10px}
+.hero .compat{display:block;font-size:13px;color:var(--ink-3);margin-top:18px}
+
+/* logo card */
+.logos{max-width:var(--max);margin:56px auto 0;padding:0 24px;display:grid;grid-template-columns:1fr;gap:0}
+@media (max-width:900px){.logos{grid-template-columns:1fr}}
+.logos .l{background:transparent;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:28px 0;display:grid;grid-template-columns:auto repeat(6,minmax(0,1fr));gap:20px;align-items:center}
+@media (max-width:900px){.logos .l{grid-template-columns:repeat(2,1fr)}}
+.logos .l span{font-family:var(--head);font-weight:700;font-size:19px;letter-spacing:-0.02em;color:#8A8E9E;text-align:left}
+.logos .l span.cap{font-family:var(--body);font-weight:400;font-size:13px;color:var(--ink-3)}
+.logos .l span small{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#A9AFC4;margin-top:6px;font-weight:400}
+.logos .r{background:var(--sky);border-radius:0 18px 18px 0;padding:40px 32px;display:flex;flex-direction:column;justify-content:space-between;gap:40px}
+@media (max-width:900px){.logos .r{border-radius:0 0 18px 18px}}
+.logos .r h3{font-size:26px;font-weight:500;color:var(--navy)}
+.logos .r h3 span{color:var(--blue)}
+
+/* outcomes / hear a call */
+.outc{max-width:var(--max);margin:96px auto 0;padding:0 24px}
+.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:28px}
+@media (max-width:700px){.tabs{grid-template-columns:1fr}}
+.tabs button{all:unset;cursor:pointer;font-family:var(--body);font-size:15.5px;color:var(--ink-3);padding:0 0 14px;border-bottom:1px solid var(--line);position:relative}
+.tabs button[aria-selected="true"]{color:var(--navy);font-weight:500}
+.tabs button[aria-selected="true"]:after{content:"";position:absolute;left:0;bottom:-1px;width:56px;height:2px;background:var(--navy)}
+.tabs button:focus-visible{outline:2px solid var(--blue);outline-offset:4px}
+.pane{display:none;grid-template-columns:minmax(0,7fr) minmax(0,5fr);border:1px solid var(--line);border-radius:18px;overflow:hidden;background:#fff;min-height:420px}
+.pane.on{display:grid}
+@media (max-width:900px){.pane.on{grid-template-columns:1fr}}
+.pane .img{background:#fff;color:var(--ink);padding:34px;position:relative;overflow:hidden;border-right:1px solid var(--line)}
+.pane .img .t{position:relative;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);display:flex;justify-content:space-between;margin-bottom:22px}
+.cl{position:relative;display:grid;grid-template-columns:60px 1fr;gap:12px;padding:8px 0;font-size:15px;line-height:1.5}
+.cl .w{font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--ink-3);padding-top:4px}
+.cl.s .w{color:var(--navy)}
+.cl .n{display:inline-block;margin-top:6px;font-size:12px;color:#6B4E12;background:var(--amber-2);border-radius:6px;padding:4px 8px;font-family:var(--mono)}
+.pane .txt{padding:34px 32px;display:flex;flex-direction:column;gap:22px;background:var(--navy);color:#fff}
+.pane .txt .mono{color:#A9AFD6}
+.pane .txt .link{color:var(--amber)}
+.pane .txt .big{font-family:var(--head);font-weight:700;font-size:clamp(26px,2.6vw,36px);line-height:1.12;letter-spacing:-0.03em;color:#fff}
+.pane .txt .link{margin-top:auto}
+.tnote{font-size:13px;color:#A9AFD6}
+.board{display:grid;gap:8px}
+.eng{display:grid;grid-template-columns:150px 1fr;gap:12px;align-items:center;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:#fff}
+.eng.pick{border-color:var(--amber);background:var(--amber-2)}
+.eng .nm b{display:block;font-weight:600;font-size:13.5px;color:var(--navy)}
+.eng .nm small{display:block;font-size:11.5px;color:var(--ink-3);margin-top:2px}
+@media (max-width:560px){.eng{grid-template-columns:1fr}}
+
+/* one job one thread */
+.system{background:var(--grey);margin-top:110px;padding:96px 0}
+.system h2{text-align:center;max-width:14ch;margin:0 auto}
+.sys-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:56px}
+@media (max-width:860px){.sys-grid{grid-template-columns:1fr}}
+.sc{background:#fff;border:1px solid var(--line);border-radius:18px;padding:26px;display:grid;gap:22px}
+.sc .frag{background:var(--page);border-radius:12px;padding:16px;min-height:170px;display:flex;flex-direction:column;justify-content:center;gap:10px;font-size:13px}
+.sc h3{color:var(--navy)}
+.sc p{color:var(--ink-2);font-size:15px;margin-top:6px;max-width:40ch}
+.rowi{display:flex;justify-content:space-between;align-items:center;background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.rowi b{font-weight:500;font-size:13.5px;color:var(--navy)}
+.rowi small{display:block;color:var(--ink-3);font-size:12px;margin-top:1px}
+.pill{font-size:11.5px;font-weight:500;padding:4px 9px;border-radius:999px;background:var(--sky);color:var(--blue);white-space:nowrap}
+.pill.red{background:#FDECEC;color:#B42323}
+.pill.green{background:var(--wa);color:var(--wa-ink)}
+.pill.navy{background:var(--amber);color:var(--navy-2)}
+.toggle{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink-2)}
+.toggle i{width:34px;height:20px;border-radius:999px;background:var(--navy);position:relative}
+.toggle i:after{content:"";position:absolute;top:3px;right:3px;width:14px;height:14px;border-radius:50%;background:#fff}
+.slots{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;font-family:var(--mono);font-size:10px;color:var(--ink-3);text-align:center}
+.slots span{padding:6px 0;background:#fff;border:1px solid var(--line);border-radius:6px}
+.slots span.b{background:var(--amber);color:var(--navy-2);border-color:var(--amber)}
+.slots span.s{background:var(--sky);color:var(--blue);border-color:var(--sky-2)}
+.wa-b{background:var(--wa);border-radius:10px 10px 10px 2px;padding:8px 11px;font-size:12.5px;max-width:88%}
+.wa-b.me{background:#fff;border:1px solid var(--line);border-radius:10px 10px 2px 10px;margin-left:auto}
+.wa-b time{display:block;font-family:var(--mono);font-size:9.5px;color:var(--ink-3);text-align:right;margin-top:2px}
+
+
+/* system visuals */
+.viz{background:var(--page);border:1px solid var(--line);border-radius:12px;padding:20px;min-height:262px;display:flex;flex-direction:column;justify-content:center;gap:12px;position:relative;overflow:hidden}
+.vtog{display:inline-flex;align-items:center;gap:8px;font-size:12px;color:var(--ink-2);background:#fff;border:1px solid var(--line);border-radius:999px;padding:4px 10px 4px 6px;align-self:center;position:relative;z-index:2}
+.vtog i{width:16px;height:16px;border-radius:50%;background:var(--navy);display:inline-block}
+.vtog b{color:#1B7A3E;font-weight:600}
+/* board */
+.board2{position:relative;display:grid;gap:7px;font-family:var(--mono);font-size:10px;color:var(--ink-3)}
+.board2 .hd,.board2 .r{display:grid;grid-template-columns:28px repeat(6,1fr);gap:7px;align-items:center}
+.board2 .av{width:26px;height:26px;border-radius:50%;background:#fff;border:1px solid var(--line-2);font-family:var(--body);font-size:9.5px;font-weight:600;color:var(--navy);display:flex;align-items:center;justify-content:center;letter-spacing:0}
+.board2 .pick .av{border-color:var(--amber);box-shadow:0 0 0 3px var(--amber-2)}
+.board2 .blk{height:28px;border-radius:6px;background:#E6E9F3}
+.board2 .gap{height:28px;border-radius:6px;border:1.5px dashed #C3C9DE}
+.board2 .gap.target{animation:gapPulse 6s infinite}
+@keyframes gapPulse{0%,20%{border-color:#C3C9DE;background:transparent}30%,55%{border-color:var(--amber);background:var(--amber-2)}62%,100%{border-color:transparent;background:transparent}}
+.board2 .drop{position:absolute;left:calc(28px + 7px + 3*(100% - 28px - 42px)/6 + 3*7px);top:calc(28px + 7px + 2*(28px + 7px));width:calc(2*(100% - 28px - 42px)/6 + 7px);height:28px;border-radius:6px;background:var(--amber);color:var(--navy-2);font-family:var(--body);font-size:11px;font-weight:600;padding:0 8px;line-height:28px;white-space:nowrap;overflow:hidden;box-shadow:0 8px 18px rgba(10,14,90,.22);display:flex;align-items:center;gap:6px;animation:dropIn 6s cubic-bezier(.2,.8,.2,1) infinite}
+.board2 .drop small{font-weight:400;font-size:10px;opacity:.8}
+.board2 .drop .ic-call{width:12px;height:12px;flex:none;background:var(--navy-2);-webkit-mask:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.6 10.8a15 15 0 006.6 6.6l2.2-2.2a1 1 0 011-.25 11 11 0 003.5.55 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11 11 0 00.55 3.5 1 1 0 01-.25 1z"/></svg>') center/contain no-repeat;mask:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.6 10.8a15 15 0 006.6 6.6l2.2-2.2a1 1 0 011-.25 11 11 0 003.5.55 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11 11 0 00.55 3.5 1 1 0 01-.25 1z"/></svg>') center/contain no-repeat}
+@keyframes dropIn{0%,18%{transform:translate(-40px,-64px) scale(.96);opacity:0}28%{opacity:1}40%,58%{transform:translate(-40px,-64px) scale(1);opacity:1}72%,88%{transform:translate(0,0) scale(1);opacity:1;box-shadow:0 2px 6px rgba(10,14,90,.12)}100%{transform:translate(0,0);opacity:0}}
+/* channels */
+.chan{display:grid;grid-template-columns:1fr 70px auto;align-items:center;gap:0}
+.srcs{display:grid;gap:12px;font-size:12.5px;color:var(--ink-2)}
+.srcs span{display:flex;align-items:center;gap:9px;height:26px}
+.ic{width:24px;height:24px;border-radius:50%;background:#fff;border:1px solid var(--line);display:inline-flex;align-items:center;justify-content:center;font-family:var(--head);font-weight:700;font-size:11px;color:#fff;flex:none}
+.ic.ph{background:var(--navy);border:0}.ic.ph:after{content:"";width:11px;height:11px;background:#fff;-webkit-mask:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.6 10.8a15 15 0 006.6 6.6l2.2-2.2a1 1 0 011-.25 11 11 0 003.5.55 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11 11 0 00.55 3.5 1 1 0 01-.25 1z"/></svg>') center/contain no-repeat;mask:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.6 10.8a15 15 0 006.6 6.6l2.2-2.2a1 1 0 011-.25 11 11 0 003.5.55 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11 11 0 00.55 3.5 1 1 0 01-.25 1z"/></svg>') center/contain no-repeat}
+.ic.wa{background:#25D366;border:0}.ic.wa:after{content:"";width:12px;height:12px;background:#fff;-webkit-mask:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3a9 9 0 00-7.8 13.5L3 21l4.6-1.2A9 9 0 1012 3zm0 2a7 7 0 110 14 7 7 0 01-3.6-1l-.3-.2-2.4.6.6-2.3-.2-.3A7 7 0 0112 5zm-2.5 3.5c-.2 0-.5 0-.7.3-.3.3-1 1-1 2.3s1 2.7 1.2 2.9c.1.2 2 3.1 4.9 4.2 2.4.9 2.9.8 3.4.7.5 0 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4l-.5-.3-1.9-.9c-.3-.1-.4-.1-.6.1l-.8 1c-.2.2-.3.2-.6.1a6 6 0 01-3-2.6c-.2-.3 0-.4.1-.6l.4-.5.3-.5v-.5l-.8-2c-.2-.5-.4-.5-.6-.5z"/></svg>') center/contain no-repeat;mask:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3a9 9 0 00-7.8 13.5L3 21l4.6-1.2A9 9 0 1012 3zm0 2a7 7 0 110 14 7 7 0 01-3.6-1l-.3-.2-2.4.6.6-2.3-.2-.3A7 7 0 0112 5zm-2.5 3.5c-.2 0-.5 0-.7.3-.3.3-1 1-1 2.3s1 2.7 1.2 2.9c.1.2 2 3.1 4.9 4.2 2.4.9 2.9.8 3.4.7.5 0 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4l-.5-.3-1.9-.9c-.3-.1-.4-.1-.6.1l-.8 1c-.2.2-.3.2-.6.1a6 6 0 01-3-2.6c-.2-.3 0-.4.1-.6l.4-.5.3-.5v-.5l-.8-2c-.2-.5-.4-.5-.6-.5z"/></svg>') center/contain no-repeat}
+.ic.ct{background:#0E5BB5;border:0}.ic.mb{background:#F26B1D;border:0}.ic.bk{background:#0B8F8A;border:0}
+.ic.em{background:#fff}.ic.em:after{content:"";width:12px;height:9px;border:1.5px solid var(--ink-2);border-radius:2px;background:linear-gradient(to bottom right,transparent 46%,var(--ink-2) 47%,var(--ink-2) 53%,transparent 54%) left top/50% 55% no-repeat,linear-gradient(to bottom left,transparent 46%,var(--ink-2) 47%,var(--ink-2) 53%,transparent 54%) right top/50% 55% no-repeat}
+.wires{width:70px;height:236px;overflow:visible}
+.pkt{offset-distance:0%;animation:travel 6.8s linear infinite;opacity:0}
+@keyframes travel{0%{offset-distance:0%;opacity:0}5%{opacity:1}28%{offset-distance:100%;opacity:1}30%,100%{offset-distance:100%;opacity:0}}
+.hub{display:flex;align-items:center;gap:8px}
+.orb{width:50px;height:50px;border-radius:50%;background:var(--navy);display:flex;align-items:center;justify-content:center;position:relative}
+.orb svg{width:24px;height:24px;position:relative}
+.orb .ring{position:absolute;inset:-4px;border-radius:50%;border:2px solid var(--amber);opacity:0;animation:ring 6.8s ease-out infinite;animation-delay:1.9s}
+@keyframes ring{0%{transform:scale(.9);opacity:.9}12%{transform:scale(1.35);opacity:0}100%{opacity:0}}
+.hub .arrow{width:16px;height:1.5px;background:var(--ink-3);position:relative}
+.hub .arrow:after{content:"";position:absolute;right:-1px;top:-3px;border:3.5px solid transparent;border-left-color:var(--ink-3)}
+.hub .to{font-size:12px;color:var(--navy);font-weight:500;display:flex;align-items:center;gap:5px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:4px 10px 4px 6px}
+.ic-diary{width:14px;height:14px;border:1.5px solid var(--navy);border-radius:3px;border-top-width:4px;box-sizing:border-box;display:inline-block}
+/* qualify */
+.qual{display:grid;grid-template-columns:1fr 40px 1fr;align-items:center;gap:8px}
+.qc{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px;position:relative}
+.qc.hi{border-color:#BFE3CB;animation:qcIn 7s ease infinite}
+@keyframes qcIn{0%,22%{opacity:.25;transform:translateX(6px)}34%,100%{opacity:1;transform:none}}
+.qh{display:flex;align-items:center;gap:6px;margin-bottom:10px}
+.qc .dot{width:9px;height:9px;border-radius:50%;display:block}
+.qc .dot.amber{background:var(--amber)}.qc .dot.green{background:#22A35A}
+.ql{font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+.qc b{display:block;font-weight:600;font-size:13.5px;color:var(--navy)}
+.qc small{display:block;font-size:11.5px;color:var(--ink-3);margin-top:2px;min-height:30px}
+.qc .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin-top:8px}
+.qc .v{font-family:var(--head);font-weight:700;font-size:24px;letter-spacing:-0.02em;color:var(--ink-2);background:var(--page);border-radius:6px;padding:4px 8px;display:inline-block;margin-top:4px}
+.qc.hi .v{color:var(--navy);background:var(--amber-2)}
+.qarrow{width:40px;height:20px;justify-self:center}
+.qarrow .shaft{stroke-dasharray:30;stroke-dashoffset:30;animation:shaft 7s ease infinite}
+.qarrow .head{opacity:0;animation:head 7s ease infinite}
+@keyframes shaft{0%,10%{stroke-dashoffset:30}22%,100%{stroke-dashoffset:0}}
+@keyframes head{0%,20%{opacity:0}26%,100%{opacity:1}}
+/* dispatch */
+.disp{display:grid;gap:18px}
+.route{display:flex;align-items:center;gap:10px}
+.node{width:38px;height:38px;border-radius:50%;background:#fff;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;flex:none}
+.ic-depot{width:16px;height:12px;border:1.5px solid var(--ink-2);border-radius:2px;position:relative;box-sizing:border-box}
+.ic-depot:after{content:"";position:absolute;left:5px;bottom:-1.5px;width:4px;height:6px;background:var(--ink-2)}
+.ic-home{width:16px;height:14px;position:relative}
+.ic-home:before{content:"";position:absolute;left:1px;right:1px;top:5px;bottom:0;border:1.5px solid var(--navy);border-top:0;box-sizing:border-box}
+.ic-home:after{content:"";position:absolute;left:0;top:0;width:11px;height:11px;border-left:1.5px solid var(--navy);border-top:1.5px solid var(--navy);transform:translate(2.5px,0) rotate(45deg)}
+.route .line{flex:1;height:0;border-top:2px dotted #C3C9DE;position:relative}
+.route .van{position:absolute;top:-16px;left:0;width:32px;height:32px;border-radius:8px;background:var(--navy);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 14px rgba(10,14,90,.25);animation:drive 7s cubic-bezier(.4,0,.2,1) infinite}
+@keyframes drive{0%,12%{left:0}70%,100%{left:calc(100% - 32px)}}
+.ic-van{width:18px;height:10px;background:#fff;border-radius:2px 5px 2px 2px;position:relative;display:block}
+.ic-van:before,.ic-van:after{content:"";position:absolute;bottom:-4px;width:5px;height:5px;border-radius:50%;background:var(--amber)}
+.ic-van:before{left:2px}.ic-van:after{right:2px}
+.dc{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px;display:grid;grid-template-columns:1fr 1fr auto;gap:14px;align-items:center}
+.dc .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.dc .v{font-family:var(--head);font-weight:700;font-size:22px;letter-spacing:-0.02em;color:var(--navy);margin-top:2px}
+.dc .v.small{font-size:15px;letter-spacing:-0.01em}
+.dc .sub{font-size:11px;color:var(--ink-3)}
+.pop{animation:pop 7s ease infinite}
+@keyframes pop{0%,68%{opacity:0;transform:scale(.8)}76%,100%{opacity:1;transform:none}}
+@media (max-width:560px){.dc{grid-template-columns:1fr 1fr}.dc .pill{grid-column:span 2;justify-self:start}}
+/* sla */
+.sla{display:grid;gap:12px}
+.sla .who{display:flex;align-items:center;gap:10px}
+.sla .who b{display:block;font-weight:600;font-size:13.5px;color:var(--navy)}
+.sla .who small{display:block;font-size:11.5px;color:var(--ink-3)}
+.sla .who .pill{margin-left:auto}
+.sla .star{width:28px;height:28px;border-radius:50%;background:var(--amber);flex:none;position:relative}
+.sla .star:after{content:"";position:absolute;inset:7px;background:var(--navy-2);clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)}
+.sla .track{position:relative;height:8px;border-radius:999px;background:#E6E9F3;margin:6px 0 2px}
+.sla .fill{position:absolute;left:0;top:0;bottom:0;width:22%;border-radius:999px;background:#22A35A;transform-origin:left;animation:fill 7s ease infinite}
+@keyframes fill{0%,10%{transform:scaleX(0)}40%,100%{transform:scaleX(1)}}
+.sla .track i{position:absolute;top:-3px;width:14px;height:14px;border-radius:50%;background:#fff;border:2px solid #22A35A;transform:translateX(-50%)}
+.sla .track .m1{left:0}.sla .track .m2{left:22%;animation:m2 7s ease infinite}
+@keyframes m2{0%,10%{left:0;opacity:0}12%{opacity:1}40%,100%{left:22%;opacity:1}}
+.sla .marks{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;color:var(--ink-3)}
+.sla .marks .ok{color:#1B7A3E}
+.pop2{animation:pop2 7s ease infinite}
+@keyframes pop2{0%,38%{opacity:0;transform:scale(.8)}46%,100%{opacity:1;transform:none}}
+/* approve */
+.appr{gap:8px;justify-content:center}
+.appr .rowi{position:relative}
+.appr .rowi .pill{position:absolute;right:12px;top:50%;transform:translateY(-50%)}
+.appr .rowi .pill:not(.wait):not(.green){position:static;transform:none}
+.pill.wait{background:var(--amber-2);color:#7A5410}
+.appr .a1 .wait{animation:waitOut 8s ease infinite;animation-delay:0s}.appr .a1 .green{animation:confIn 8s ease infinite;animation-delay:0s}
+.appr .a2 .wait{animation:waitOut 8s ease infinite;animation-delay:1.4s}.appr .a2 .green{animation:confIn 8s ease infinite;animation-delay:1.4s}
+.appr .a3 .wait{animation:waitOut 8s ease infinite;animation-delay:2.8s}.appr .a3 .green{animation:confIn 8s ease infinite;animation-delay:2.8s}
+@keyframes waitOut{0%,20%{opacity:1}23%,100%{opacity:0}}
+@keyframes confIn{0%,24%{opacity:0;transform:translateY(-50%) scale(.85)}31%,100%{opacity:1;transform:translateY(-50%) scale(1)}}
+@media (prefers-reduced-motion:reduce){.board2 .drop{transform:none;opacity:1;box-shadow:0 2px 6px rgba(10,14,90,.12)}.pkt{opacity:0}.qc.hi{opacity:1;transform:none}.qarrow .shaft{stroke-dashoffset:0}.qarrow .head{opacity:1}.route .van{left:calc(100% - 32px)}.pop,.pop2{opacity:1;transform:none}.sla .fill{transform:none}.sla .track .m2{left:22%;opacity:1}.appr .wait{opacity:0}.appr .green{opacity:1;transform:translateY(-50%)}}
+
+/* built in your office */
+.built{max-width:var(--max);margin:0 auto;padding:110px 24px;display:grid;grid-template-columns:minmax(0,6fr) minmax(0,6fr);gap:60px;align-items:start}
+@media (max-width:900px){.built{grid-template-columns:1fr;gap:24px;padding:72px 24px}}
+.built p{font-size:18px;color:var(--ink-2);line-height:1.55;max-width:50ch}
+.built p+p{margin-top:18px}
+.built .link{display:inline-block;margin-top:22px}
+
+/* ladder */
+.ladder{max-width:var(--max);margin:0 auto;padding:0 24px 100px}
+.ladder .mono{display:block;margin-bottom:14px}
+.lad{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:40px}
+@media (max-width:860px){.lad{grid-template-columns:1fr}}
+.ls{background:#fff;border:1px solid var(--line);border-radius:18px;padding:26px}
+.ls .toggle{margin-bottom:18px}
+.ls .toggle i.off{background:#D3D9EA}.ls .toggle i.off:after{right:auto;left:3px}
+.ls .toggle i.mid{background:var(--amber)}.ls .toggle i.mid:after{right:auto;left:10px}
+.ls h3{font-size:24px}
+.ls p{color:var(--ink-2);font-size:15px;margin-top:8px}
+.ls .ex{font-family:var(--mono);font-size:12px;color:var(--ink-3);margin-top:14px;line-height:1.5}
+.rules{list-style:none;padding:0;margin:40px 0 0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 40px}
+@media (max-width:860px){.rules{grid-template-columns:1fr}}
+.rules li{display:grid;grid-template-columns:28px 1fr;gap:12px;padding:16px 0;border-top:1px solid var(--line);font-size:15px;color:var(--ink-2)}
+.rules li b{display:block;color:var(--navy);font-weight:500;margin-bottom:3px}
+.rules .n{font-family:var(--mono);font-size:11.5px;color:#B7791F;padding-top:4px}
+
+/* faq */
+.faq{max-width:820px;margin:0 auto;padding:0 24px 110px}
+.faq h2{text-align:center;font-size:clamp(28px,3.4vw,44px);margin-bottom:36px}
+.faq details{border-top:1px solid var(--line)}
+.faq details:last-child{border-bottom:1px solid var(--line)}
+.faq summary{list-style:none;cursor:pointer;padding:20px 0;font-family:var(--head);font-weight:500;font-size:19px;color:var(--navy);display:flex;justify-content:space-between;gap:16px;letter-spacing:-0.01em}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary:after{content:"+";color:var(--ink-3);font-weight:400}
+.faq details[open] summary:after{content:"\2013"}
+.faq .a{padding:0 0 22px;color:var(--ink-2);font-size:15.5px;line-height:1.6}
+
+/* close + footer */
+.close{margin:8px;border-radius:22px;background:var(--navy);padding:110px 24px;text-align:center}
+.close h2{color:#fff}
+.close .btn-grad{background:var(--amber);color:var(--navy-2)}
+.close .btn-grad:after{background:var(--navy-2)}
+.close .btn-grad:hover{background:#F7B95C}
+.close h2{max-width:16ch;margin:0 auto}
+.close p{max-width:52ch;margin:20px auto 0;color:#C9CDEA;font-size:17px}
+.close .btn{margin-top:32px}
+.close .facts{display:flex;justify-content:center;gap:28px;flex-wrap:wrap;margin-top:40px;font-size:13.5px;color:#C9CDEA}
+.close .facts span:before{content:"";display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--amber);margin-right:8px;vertical-align:middle}
+footer{margin:8px;border-radius:22px;background:#fff;border:1px solid var(--line);color:var(--ink-2);padding:48px 24px 40px;overflow:hidden}
+.f-in{max-width:var(--max);margin:0 auto;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;font-size:14px}
+@media (max-width:700px){.f-in{grid-template-columns:1fr 1fr}}
+.f-in .mono{color:var(--ink-3);display:block;margin-bottom:14px}
+.f-in a{display:block;text-decoration:none;color:var(--navy);margin-bottom:10px}
+.f-word{max-width:var(--max);margin:40px auto 0;font-size:13px;color:var(--ink-3);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:20px}
+</style>
+</head>
+<body>
+
+<div class="hero" id="top">
+  <div class="nav">
+    <a class="logo" href="#top"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8.5" stroke="#0A0E5A" stroke-width="1.6"/><path d="M6.5 11.5c1 1.6 2.2 2.4 3.5 2.4s2.5-.8 3.5-2.4M7 8h.01M13 8h.01" stroke="#0A0E5A" stroke-width="1.6" stroke-linecap="round"/></svg>Go Simba</a>
+    <div class="links"><a href="#call">Hear a call</a><a href="#system">Platform</a><a href="#control">Who's in charge</a><a href="#faq">Questions</a></div>
+    <div class="nav-r"><a class="btn btn-white" href="mailto:hello@gosimba.ai?subject=20%20minutes%20with%20Simba">Book 20 minutes</a></div>
+  </div>
+  <div class="hero-in">
+    <div class="hero-txt">
+      <span class="eyebrow"><i></i>Opening to a small number of UK field service firms</span>
+      <h1>An AI coworker for UK field service.</h1>
+      <p class="sub"><b>Simba answers the phone and books the right engineer into a real gap in the diary.</b> Confirmations go out on WhatsApp. Your team stays in charge, and you always know what's being said in your name.</p>
+      <form class="ringme" data-ringme novalidate>
+        <div class="fields"><input name="name" type="text" placeholder="Your name" autocomplete="name"><input name="tel" type="tel" placeholder="Your mobile" autocomplete="tel" required></div>
+        <button class="btn btn-grad" type="submit">Have Simba ring me</button>
+        <p class="msg" data-msg>He rings within a minute. Try to book a job, or try to catch him out.</p>
+      </form>
+      <small class="compat">Works alongside BigChange, Joblogic and Commusoft, or on his own.</small>
+    </div>
+    <div class="hero-vis" aria-label="Incoming call, as the office sees it">
+      <div class="eb"><span><i></i>Live call</span><span>The office's phone</span></div>
+      <div class="phone">
+        <div class="scr">
+          <div class="st"><span>19:41</span><span>Ashworth Drainage</span></div>
+          <div class="who"><small>Simba is on a call</small><b>Mrs Okafor</b><span>12 Bridge Road, SL6 4QP &middot; 0:48</span></div>
+          <div class="card"><div class="k">So far</div>Water coming up through the downstairs toilet. Dirty. Same-day rule applies.</div>
+          <div class="card hi"><div class="k" style="color:#E6E8F7">Suggesting</div>Marcus, on call, 14 min away. Waiting for you to confirm.</div>
+          <div class="act"><span>Listen</span><span class="take">Take over</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="logos">
+  <div class="l">
+    <span class="cap">Reads and writes your diary in</span>
+    <span>BigChange</span><span>Joblogic</span><span>Commusoft</span><span>simPRO</span><span>WhatsApp</span>
+    <span class="cap">or runs on his own, from a whiteboard and a mobile</span>
+  </div>
+</div>
+
+<div class="outc" id="call">
+  <div class="tabs" role="tablist">
+    <button role="tab" aria-selected="true" data-tab="0">Out of hours, new job</button>
+    <button role="tab" aria-selected="false" data-tab="1">Right engineer, right gap</button>
+    <button role="tab" aria-selected="false" data-tab="2">Reschedule, diary moved</button>
+  </div>
+
+  <div class="pane on" data-pane="0">
+    <div class="img">
+      <div class="t"><span>Ashworth Drainage &middot; Tue 19:41</span><span>2:14</span></div>
+      <div class="cl s"><div class="w">Simba</div><div>Evening, Ashworth Drainage, you're through to Simba. What's happened?<br><span class="n">19:41:12 Office pinged</span></div></div>
+      <div class="cl"><div class="w">Caller</div><div>Water's coming up through the downstairs toilet. It's all over the floor.</div></div>
+      <div class="cl s"><div class="w">Simba</div><div>Is the water clear, or dirty?<br><span class="n">Same-day rule, set by Ashworth</span></div></div>
+      <div class="cl"><div class="w">Caller</div><div>Dirty.</div></div>
+      <div class="cl s"><div class="w">Simba</div><div>Then we shouldn't leave that overnight. Can I take your postcode and the house number?</div></div>
+      <div class="cl"><div class="w">Caller</div><div>SL6 4QP, number 12.</div></div>
+      <div class="cl s"><div class="w">Simba</div><div>That's 12 Bridge Road, Maidenhead. Is that right?<br><span class="n">Read back. Never a full address by voice</span></div></div>
+      <div class="cl s"><div class="w">Simba</div><div>Marcus is on call tonight, about 15 minutes from you, on the out-of-hours rate. Or Dan at 8 tomorrow at the normal rate.<br><span class="n">19:43:40 Sarah confirmed from her phone</span></div></div>
+    </div>
+    <div class="txt">
+      <span class="mono">Voice &middot; Out of hours &middot; Dirty water in the house</span>
+      <div class="big">Urgency by the firm's rule. Postcode read back. Two real slots offered.</div>
+      <div class="big">0 messages sent before the office said yes.</div>
+      <p class="tnote" data-talk-note hidden>Live calls are opening with a handful of firms first. Book 20 minutes and we'll ring you from Simba's line.</p>
+      <a class="link" href="#call" data-talk>Talk to Simba</a>
+    </div>
+  </div>
+
+  <div class="pane" data-pane="1">
+    <div class="img">
+      <div class="t"><span>Tonight &middot; who can take Mrs Okafor</span><span>19:43</span></div>
+      <div class="board">
+        <div class="eng"><div class="nm"><b>Dan K</b><small>Off shift. Next gap 08:00</small></div><div class="slots"><span>6pm</span><span>7pm</span><span>8pm</span><span>9pm</span><span>10pm</span><span>11pm</span></div></div>
+        <div class="eng pick"><div class="nm"><b>Marcus B</b><small>On call &middot; 14 min away &middot; jetter on the van</small></div><div class="slots"><span>6pm</span><span>7pm</span><span class="b">8pm</span><span>9pm</span><span>10pm</span><span>11pm</span></div></div>
+        <div class="eng"><div class="nm"><b>Priya S</b><small>On call &middot; 41 min away &middot; no jetter</small></div><div class="slots"><span>6pm</span><span>7pm</span><span class="s">8pm</span><span>9pm</span><span>10pm</span><span>11pm</span></div></div>
+      </div>
+      <div class="rowi" style="margin-top:14px"><div><b>Suggested: Marcus, 8:10pm</b><small>Nearest engineer with the right kit, in a real gap</small></div><span class="pill navy">Confirm</span></div>
+    </div>
+    <div class="txt">
+      <span class="mono">Allocate &middot; Skills, kit, travel time</span>
+      <div class="big">Marcus, not Priya. 14 minutes, not 41, and the jetter is on his van.</div>
+      <div class="big">Suggested at 19:43:05. Sarah confirmed at 19:43:40.</div>
+      <a class="link" href="#control">How approval works</a>
+    </div>
+  </div>
+
+  <div class="pane" data-pane="2">
+    <div class="img">
+      <div class="t"><span>Ashworth Drainage &middot; Wed 08:52</span><span>1:20</span></div>
+      <div class="cl s"><div class="w">Simba</div><div>Morning, Ashworth Drainage, you're through to Simba.</div></div>
+      <div class="cl"><div class="w">Caller</div><div>It's Mr Farrell. I've got you down for 10 today but I've been called into work. Can we move it?</div></div>
+      <div class="cl s"><div class="w">Simba</div><div>No problem. I can do 2 o'clock today with the same engineer, or 9 tomorrow morning. Which suits?<br><span class="n">Two real gaps in Dan's diary. Nothing else moved</span></div></div>
+      <div class="cl"><div class="w">Caller</div><div>2 today's good.</div></div>
+      <div class="cl s"><div class="w">Simba</div><div>Done, Dan will be with you between 2 and 4. You'll get a message to confirm, and one when he's on his way.<br><span class="n">08:53 Move suggested. Sarah tapped yes at 08:55</span></div></div>
+    </div>
+    <div class="txt">
+      <span class="mono">Reschedule &middot; Daytime &middot; No phone tag</span>
+      <div class="big">Moved in 80 seconds. Dan's day updated. Nobody in the office picked up.</div>
+      <div class="big">The 10am gap went back in the diary.</div>
+      <a class="link" href="#faq">Does he move jobs without asking?</a>
+    </div>
+  </div>
+
+<div class="system" id="system">
+  <div class="wrap">
+    <h2>One coworker. Every channel, every job, one diary.</h2>
+    <div class="sys-grid">
+
+      <div class="sc">
+        <div class="viz">
+          <div class="vtog"><i></i>Out-of-hours line <b>On</b></div>
+          <div class="board2">
+            <div class="hd"><span></span><span>8am</span><span>10am</span><span>12pm</span><span>2pm</span><span>4pm</span><span>6pm</span></div>
+            <div class="r"><span class="av">DK</span><span class="blk"></span><span class="blk"></span><span class="gap"></span><span class="blk"></span><span class="blk"></span><span class="blk"></span></div>
+            <div class="r"><span class="av">JT</span><span class="gap"></span><span class="blk"></span><span class="blk"></span><span class="blk"></span><span class="gap"></span><span class="blk"></span></div>
+            <div class="r pick"><span class="av">MB</span><span class="blk"></span><span class="blk"></span><span class="blk"></span><span class="gap target"></span><span class="blk"></span><span class="blk"></span></div>
+            <div class="r"><span class="av">PS</span><span class="blk"></span><span class="gap"></span><span class="blk"></span><span class="blk"></span><span class="blk"></span><span class="gap"></span></div>
+            <div class="drop"><span class="ic-call"></span>Mrs Okafor</div>
+          </div>
+        </div>
+        <div><h3>Book into a real gap</h3><p>Every call becomes a booking in a real gap, with travel time either side. Reschedules put the old gap back. The board stays full and honest.</p></div>
+      </div>
+
+      <div class="sc">
+        <div class="viz">
+          <div class="chan">
+            <div class="srcs">
+              <span><i class="ic ph"></i>Phone</span>
+              <span><i class="ic wa"></i>WhatsApp</span>
+              <span><i class="ic ct">C</i>Checkatrade</span>
+              <span><i class="ic mb">M</i>MyBuilder</span>
+              <span><i class="ic bk">B</i>Bark</span>
+              <span><i class="ic em"></i>Email and web form</span>
+            </div>
+            <svg class="wires" viewBox="0 0 140 236" aria-hidden="true">
+              <g fill="none" stroke="#D6D9E6" stroke-width="1.5">
+                <path id="w1" d="M0 18 C70 18 70 118 140 118"/>
+                <path id="w2" d="M0 58 C70 58 70 118 140 118"/>
+                <path id="w3" d="M0 98 C70 98 70 118 140 118"/>
+                <path id="w4" d="M0 138 C70 138 70 118 140 118"/>
+                <path id="w5" d="M0 178 C70 178 70 118 140 118"/>
+                <path id="w6" d="M0 218 C70 218 70 118 140 118"/>
+              </g>
+              <circle class="pkt" r="3" fill="#F2A93B" style="offset-path:path('M0 18 C70 18 70 118 140 118');animation-delay:0s"/>
+              <circle class="pkt" r="3" fill="#F2A93B" style="offset-path:path('M0 58 C70 58 70 118 140 118');animation-delay:1.1s"/>
+              <circle class="pkt" r="3" fill="#F2A93B" style="offset-path:path('M0 98 C70 98 70 118 140 118');animation-delay:2.3s"/>
+              <circle class="pkt" r="3" fill="#F2A93B" style="offset-path:path('M0 138 C70 138 70 118 140 118');animation-delay:3.4s"/>
+              <circle class="pkt" r="3" fill="#F2A93B" style="offset-path:path('M0 178 C70 178 70 118 140 118');animation-delay:4.6s"/>
+              <circle class="pkt" r="3" fill="#F2A93B" style="offset-path:path('M0 218 C70 218 70 118 140 118');animation-delay:5.7s"/>
+            </svg>
+            <div class="hub"><div class="orb"><span class="ring"></span><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8.5" stroke="#fff" stroke-width="1.6"/><path d="M6.5 11.5c1 1.6 2.2 2.4 3.5 2.4s2.5-.8 3.5-2.4M7 8h.01M13 8h.01" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg></div><span class="arrow"></span><span class="to"><i class="ic-diary"></i>Diary</span></div>
+          </div>
+        </div>
+        <div><h3>Capture every lead</h3><p>Calls, WhatsApps, Checkatrade, MyBuilder and Bark enquiries, the web form. One place, full context, answered inside a minute instead of the next morning.</p></div>
+      </div>
+
+      <div class="sc">
+        <div class="viz">
+          <div class="qual">
+            <div class="qc"><div class="qh"><span class="dot amber"></span><span class="ql">As described</span></div><b>Blocked sink</b><small>Under 1 hour</small><div class="k">Est. value</div><div class="v">£120</div></div>
+            <svg class="qarrow" viewBox="0 0 40 20" aria-hidden="true"><path d="M2 10 H30" stroke="#0A0E5A" stroke-width="2" stroke-linecap="round" class="shaft"/><path d="M24 4 L32 10 L24 16" fill="none" stroke="#0A0E5A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="head"/></svg>
+            <div class="qc hi"><div class="qh"><span class="dot green"></span><span class="ql">After 3 questions</span></div><b>Recurring blockage</b><small>3rd call in 6 months. CCTV survey.</small><div class="k">Est. value</div><div class="v">£1,450</div></div>
+          </div>
+        </div>
+        <div><h3>Qualify every job</h3><p>He asks what your best office manager would ask. Three blockages in six months is a survey, not another £120 callout. The office sees the difference before anyone is sent.</p></div>
+      </div>
+
+      <div class="sc">
+        <div class="viz">
+          <div class="disp">
+            <div class="route">
+              <span class="node depot"><i class="ic-depot"></i></span>
+              <span class="line"><span class="van"><i class="ic-van"></i></span></span>
+              <span class="node home"><i class="ic-home"></i></span>
+            </div>
+            <div class="dc">
+              <div class="dcl"><div class="k">Forecast ETA</div><div class="v">8:10pm</div></div>
+              <div class="dcl"><div class="k">Engineer</div><div class="v small">Marcus B</div><div class="sub">Jetter on the van &middot; 14 min</div></div>
+              <span class="pill green pop">Confirmed by Sarah</span>
+            </div>
+          </div>
+        </div>
+        <div><h3>Send the right engineer</h3><p>Nearest engineer with the right kit, in a real gap. Suggested by Simba, confirmed by your office with one tap, and the customer told on WhatsApp.</p></div>
+      </div>
+
+      <div class="sc">
+        <div class="viz">
+          <div class="sla">
+            <div class="who"><span class="star"></span><div><b>Hillside Housing</b><small>Recognised from the number &middot; Contract client</small></div><span class="pill navy">24h SLA</span></div>
+            <div class="track"><span class="fill"></span><i class="m1"></i><i class="m2"></i></div>
+            <div class="marks"><span>Call 19:41</span><span class="ok">Booked 20:10</span><span>Due Wed 19:41</span></div>
+            <div class="rowi"><div><b>Damp and mould, flat 4B</b><small>Awaab's Law timescale. Priya, tomorrow 08:00.</small></div><span class="pill green pop2">Inside SLA</span></div>
+          </div>
+        </div>
+        <div><h3>Contract and VIP clients, first</h3><p>The housing association on a 24-hour SLA, the facilities contract, the landlord who sends you 40 jobs a year. He knows who they are on the first ring, what they're owed, and books inside it. Every one logged with the time, so you can prove it.</p></div>
+      </div>
+
+      <div class="sc">
+        <div class="viz appr">
+          <div class="rowi a1"><div><b>Booking, Mrs Okafor</b><small>Suggested 19:43:05</small></div><span class="pill wait">Waiting</span><span class="pill green">Confirmed by Sarah</span></div>
+          <div class="rowi a2"><div><b>Hillside Housing, flat 4B</b><small>Suggested 20:08</small></div><span class="pill wait">Waiting</span><span class="pill green">Confirmed by Sarah</span></div>
+          <div class="rowi a3"><div><b>Reschedule, Mr Farrell</b><small>Suggested 08:53</small></div><span class="pill wait">Waiting</span><span class="pill green">Confirmed by Sarah</span></div>
+          <div class="rowi"><div><b>On-my-way, WhatsApp</b><small>Sent 19:44</small></div><span class="pill">Auto</span></div>
+        </div>
+        <div><h3>Approve before it sends</h3><p>Nothing reaches a customer or moves in the diary without a tap from your team, until you put that job on Auto. Every call and message is saved and searchable.</p></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="built">
+  <h2>Set up in your office. On your real jobs.</h2>
+  <div>
+    <p>We come to you. An hour with your office to learn how you answer, what counts as urgent, who's on call, which engineers do what and what's on each van.</p>
+    <p>Then he runs in Watch mode for a week on your live calls, and you tell us what he got wrong. You switch on what you trust, when you trust it. If he gets something wrong, that's ours to fix.</p>
+    <a class="link" href="mailto:hello@gosimba.ai?subject=20%20minutes%20with%20Simba">Book 20 minutes</a>
+  </div>
+</div>
+
+<div class="ladder" id="control">
+  <span class="mono">Who's in charge</span>
+  <h2>Your team. Every time.</h2>
+  <div class="lad">
+    <div class="ls"><div class="toggle"><i class="off"></i>Week one</div><h3>Watch</h3><p>He drafts, you read everything before it goes anywhere.</p><div class="ex">Call handled, booking drafted, Sarah sends the message herself.</div></div>
+    <div class="ls"><div class="toggle"><i class="mid"></i>Most firms</div><h3>Approve</h3><p>He suggests, a person taps yes. Nothing goes out unseen.</p><div class="ex">Call handled, booking suggested, Sarah confirms, Simba sends.</div></div>
+    <div class="ls"><div class="toggle"><i></i>When you trust him</div><h3>Auto</h3><p>For the jobs you've watched him get right. You still see every one.</p><div class="ex">Call handled, booked, messaged. Sarah sees it in the morning.</div></div>
+  </div>
+  <ul class="rules">
+    <li><span class="n">01</span><div><b>The office is pinged the moment a call starts.</b>Anyone on your team can take over mid-call. Simba hands over with a whisper of what's been said, so the caller never repeats themselves.</div></li>
+    <li><span class="n">02</span><div><b>He suggests. A person sends.</b>Bookings, reschedules, anything to a customer. Until you move a job to Auto, it waits for a tap.</div></li>
+    <li><span class="n">03</span><div><b>Emergencies never touch him.</b>A gas smell goes straight to 0800 111 999. Flooding, someone unwell, anything on your emergency list goes to a human. The list is yours and you can read it.</div></li>
+    <li><span class="n">04</span><div><b>Switch him off and the day still runs.</b>Calls ring through to the office as they did before. No migration, nothing to unpick.</div></li>
+  </ul>
+</div>
+
+<div class="faq" id="faq">
+  <h2>What we get asked on every call.</h2>
+  <details><summary>What happens when a customer needs a person?</summary><div class="a">They get one. Anyone on your team can take over a live call from their phone, and Simba hands over with a summary of what's been said so far. If nobody picks up, he takes a message, books the callback into the diary, and the office sees it flagged first thing.</div></details>
+  <details><summary>Can we control what he says?</summary><div class="a">Yes, and you should. Your greeting, your rates, what counts as urgent, what he's allowed to promise and what he's not. It's written down in plain English and you can change it yourself. He follows the rules you set, and only those.</div></details>
+  <details><summary>What if he gets it wrong?</summary><div class="a">He will, sometimes. That's why nothing goes to a customer without a person's tap until you decide otherwise, and why every call is recorded and searchable. When he gets something wrong, you tell us, we fix the rule, and you can see the fix in the next call. Week one is for finding these.</div></details>
+  <details><summary>Does he work with BigChange or Joblogic?</summary><div class="a">He sits alongside them. Bookings he makes land in your diary, and he reads the diary to offer real slots. Your system stays the system of record, and if you switch him off, nothing in it changes. Commusoft and simPRO too. If you run on a whiteboard and a mobile, he runs on his own.</div></details>
+  <details><summary>Does he move jobs around without asking?</summary><div class="a">No. A reschedule is a suggestion like any other booking. He offers the caller real alternative gaps, and the move waits for a tap from your office, unless you have put reschedules on Auto for that engineer. Every move is logged with who approved it.</div></details>
+  <details><summary>Will customers know they're talking to an AI?</summary><div class="a">If they ask, he says so. He introduces himself as Simba from your firm, sounds British, and doesn't pretend. Most callers with water on the floor care about the answer to "when can someone come", and he gives them one.</div></details>
+  <details><summary>Where does our data go?</summary><div class="a">Your calls, transcripts and customer details are stored in the UK and EU, under your firm's name, and used to run your account. They're not used to train anything for anyone else. You can export or delete the lot.</div></details>
+  <details><summary>What does it cost?</summary><div class="a">A flat monthly price for the firm. No per-seat, no per-call, no 24-month contract. We'll give you the number on the first call, and it won't change when you add engineers.</div></details>
+</div>
+
+<div class="close">
+  <h2>Run your phones and your diary on Simba.</h2>
+  <p>We're building him with a small number of UK field service firms. 20 minutes, a call like yours, and a straight answer on where he's ready and where he isn't.</p>
+  <a class="btn btn-grad" href="mailto:hello@gosimba.ai?subject=20%20minutes%20with%20Simba">Book 20 minutes</a>
+  <div class="facts"><span>Flat monthly price, no per-seat</span><span>Live within a week</span></div>
+</div>
+
+<footer>
+  <div class="f-in">
+    <div><span class="mono">&copy; 2026 Go Simba</span><a href="#top">London</a></div>
+    <div><span class="mono">Go Simba</span><a href="#call">Hear a call</a><a href="#system">Platform</a><a href="#control">Who's in charge</a><a href="#faq">Questions</a></div>
+    <div><span class="mono">Legal</span><a href="#">Privacy</a></div>
+    <div><span class="mono">Connect</span><a href="mailto:hello@gosimba.ai">hello@gosimba.ai</a><a href="mailto:hello@gosimba.ai?subject=20%20minutes%20with%20Simba">Book 20 minutes</a></div>
+  </div>
+  <div class="f-word"><span>Go Simba.ai</span></div>
+</footer>
+
+<script>
+(function(){
+  var SIMBA_VOICE_URL = "";
+  var note = document.querySelector('[data-talk-note]');
+  document.querySelectorAll('[data-talk]').forEach(function(a){
+    a.addEventListener('click', function(e){
+      if (SIMBA_VOICE_URL) { e.preventDefault(); window.open(SIMBA_VOICE_URL, '_blank', 'noopener'); return; }
+      if (note) note.hidden = false;
+    });
+  });
+
+  // Have Simba ring me. Set SIMBA_CALL_ENDPOINT to the outbound-call webhook when it exists.
+  var SIMBA_CALL_ENDPOINT = "";
+  document.querySelectorAll('form[data-ringme]').forEach(function(f){
+    f.addEventListener('submit', function(e){
+      e.preventDefault();
+      var name = f.querySelector('[name=name]').value.trim(), tel = f.querySelector('[name=tel]').value.trim();
+      var msg = f.querySelector('[data-msg]'), btn = f.querySelector('button');
+      if (!tel) { msg.textContent = 'Add a mobile number and he will ring it.'; return; }
+      if (SIMBA_CALL_ENDPOINT) {
+        btn.disabled = true; msg.textContent = 'Ringing you now.';
+        fetch(SIMBA_CALL_ENDPOINT, {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({name:name, tel:tel, prospect: localStorage.getItem('gs_prospect')||''})})
+          .then(function(r){ if(!r.ok) throw new Error(); msg.textContent = 'Ringing you now. Pick up, and try to book a job.'; })
+          .catch(function(){ btn.disabled = false; msg.textContent = 'That did not go through. Try again, or book 20 minutes.'; });
+        return;
+      }
+      msg.textContent = 'Until the line is live, this sends us your number and we ring you from Simba’s line.';
+      location.href = 'mailto:hello@gosimba.ai?subject=' + encodeURIComponent('Ring me from Simba') + '&body=' + encodeURIComponent((name||'') + '\n' + tel);
+    });
+  });
+  // tabs
+  var tabs = document.querySelectorAll('[data-tab]'), panes = document.querySelectorAll('[data-pane]');
+  tabs.forEach(function(t){ t.addEventListener('click', function(){
+    tabs.forEach(function(x){ x.setAttribute('aria-selected', x === t ? 'true' : 'false'); });
+    panes.forEach(function(p){ p.classList.toggle('on', p.getAttribute('data-pane') === t.getAttribute('data-tab')); });
+  }); });
+  try { var p = new URLSearchParams(location.search).get('p'); if (p) { document.documentElement.setAttribute('data-prospect', p); localStorage.setItem('gs_prospect', p); } } catch (err) {}
+})();
+</script>
+</body>
+</html>
