@@ -2304,9 +2304,9 @@ footer{max-width:var(--max);margin:0 auto;padding:28px 24px 36px;display:flex;ju
   (function(){
     var rec = document.querySelector('[data-rec]'); if (!rec) return;
     var CALLS = [
-      {who:'Riverside Care Home', when:'Tue 9 Sep, 19:41', dur:72, r1:'Job booked \u00b7 Tonight 8:30pm \u00b7 Marcus', r2:'Riverside confirmed via WhatsApp', r3:'Sarah approved from her phone', t:['19:43','19:43','19:44']},
-      {who:'Hillside Housing', when:'Wed 10 Sep, 06:43', dur:58, r1:'Job booked \u00b7 8am \u00b7 Priya', r2:'Tenant confirmed via WhatsApp', r3:'SLA flagged to Sarah', t:['06:44','06:44','06:44']},
-      {who:'Fairview Industrial', when:'Wed 10 Sep, 21:10', dur:95, r1:'Job booked \u00b7 Thu 8am \u00b7 Dan', r2:'Fairview confirmed via WhatsApp', r3:'14-year plant flagged for a quote', t:['21:12','21:12','21:13']}
+      {who:'Riverside Care Home', when:'Tue 9 Sep, 19:41', dur:72, r1:'Job booked \u00b7 Tonight 8:30pm \u00b7 Marcus', r2:'Riverside confirmed via WhatsApp', t:['19:43','19:43','19:44']},
+      {who:'Hillside Housing', when:'Wed 10 Sep, 06:43', dur:58, r1:'Job booked \u00b7 8am \u00b7 Priya', r2:'Tenant confirmed via WhatsApp', t:['06:44','06:44','06:44']},
+      {who:'Fairview Industrial', when:'Wed 10 Sep, 21:10', dur:95, r1:'Job booked \u00b7 Thu 8am \u00b7 Dan', r2:'Fairview confirmed via WhatsApp', t:['21:12','21:12','21:13']}
     ];
     var LEN = 6000, HOLD = 2000;
     var q = function(sel){ return rec.querySelector(sel); };
@@ -2319,8 +2319,8 @@ footer{max-width:var(--max);margin:0 auto;padding:28px 24px 36px;display:flex;ju
       var c = CALLS[i % CALLS.length];
       rec.classList.remove('go'); void rec.offsetWidth; rows.forEach(function(r){ r.classList.remove('in'); });
       q('[data-who]').textContent = c.who; q('[data-init]').textContent = c.who.charAt(0); q('[data-when]').textContent = c.when; q('[data-dur]').textContent = fmt(c.dur); q('[data-cur]').textContent = '0:00';
-      q('[data-r1]').textContent = c.r1; q('[data-r2]').textContent = c.r2; q('[data-r3]').textContent = c.r3;
-      q('[data-t1]').textContent = c.t[0]; q('[data-t2]').textContent = c.t[1]; q('[data-t3]').textContent = c.t[2];
+      q('[data-r1]').textContent = c.r1; q('[data-r2]').textContent = c.r2; 
+      q('[data-t1]').textContent = c.t[0]; q('[data-t2]').textContent = c.t[1]; 
       rec.style.setProperty('--len', LEN + 'ms');
       var start = Date.now();
       var played = q('.rec-bars.played'), ph = q('.rec-ph'); played.style.clipPath = 'inset(0 100% 0 0)'; ph.style.left = '0%';
