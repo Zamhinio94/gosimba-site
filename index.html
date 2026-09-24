@@ -1892,7 +1892,13 @@ footer{max-width:var(--max);margin:0 auto;padding:28px 24px 36px;display:flex;ju
   .vs-r{grid-template-columns:1fr 1fr;padding-top:8px}
   .vs-r .vs-l{grid-column:1/-1;min-height:0;padding:6px 14px 2px;font-weight:600}
   .vs-h span,.vs-r span{padding:8px 14px;min-height:40px;font-size:13.5px}
-  .vs-r span:nth-child(3){border-radius:0}
+  /* no full-height column band on phones: tint only the With cell, as a chip */
+  .vs-h span:nth-child(3){background:transparent;color:var(--navy)}
+  .vs-h span{padding:8px 14px 6px}
+  .vs-r{padding:10px 6px 10px 0}
+  .vs-r span:nth-child(2){align-self:center}
+  .vs-r span:nth-child(3){background:var(--c1s);border-radius:10px;align-self:stretch;margin:0;padding:8px 12px;min-height:40px}
+  .vs-r .vs-l{padding:0 14px 8px}
 }
 @media (max-width:560px){
   /* hero WhatsApp card: voice note on its own line, photos beneath */
