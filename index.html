@@ -1915,6 +1915,19 @@ footer{max-width:var(--max);margin:0 auto;padding:28px 24px 36px;display:flex;ju
   .lv-txt{white-space:normal;overflow:visible}
   .nc-b b{white-space:normal}
 }
+@media (max-width:560px){
+  /* board type set larger inside the 560px layout so it reads at ~9-10px once scaled */
+  .does-feed .sk .sk-top b{font-size:19px}
+  .does-feed .sk .sk-top small,.does-feed .sk .sk-top em,.does-feed .sk .sk-tog{font-size:15px}
+  .does-feed .sk .sk-grid{font-size:14px;gap:9px}
+  .does-feed .sk .sk-r{grid-template-columns:44px repeat(6,1fr);gap:9px}
+  .does-feed .sk .sk-av{width:40px;height:40px}
+  .does-feed .sk .sk-g,.does-feed .sk .sk-c{height:42px}
+  .does-feed .sk .sk-card,.does-feed .sk .sk-rec,.does-feed .sk .sk-wa{font-size:14.5px}
+  .does-feed .sk .sk-msg{font-size:15.5px;padding:12px 14px}
+  /* coming-soon tabs were two fixed 200px columns, wider than the screen */
+  .ptabs{grid-template-columns:1fr 1fr;gap:12px;padding:0 16px}
+}
 </style>
 </head>
 <body>
