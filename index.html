@@ -1875,6 +1875,7 @@ footer{max-width:var(--max);margin:0 auto;padding:28px 24px 36px;display:flex;ju
 .rp-did p{font-size:16px;color:var(--ink);line-height:1.45}
 .rp-did em{font-style:normal;font-size:12.5px;color:#1F6B35;background:var(--c4s);border-radius:999px;padding:4px 10px;white-space:nowrap}
 @media (max-width:900px){.rules-sec{padding:72px 20px 0}.rules-head{margin-bottom:28px;text-align:left}.rules-head h2{margin:0}.rp-did{grid-template-columns:1fr}.rp-did em{justify-self:start}}
+.vs-m-h,.vs-m{display:none}
 /* ---------- phone-width fixes (24 Sep) ---------- */
 @media (max-width:560px){
   /* rules card header: keep to one line */
@@ -1888,17 +1889,14 @@ footer{max-width:var(--max);margin:0 auto;padding:28px 24px 36px;display:flex;ju
   .sk-top b{flex:none}
   /* panels: no reserved height, so the board sits at the top of its card */
   .does-panel{min-height:0!important;justify-content:flex-start}
-  /* comparison table on phones: one clean list, no Before column */
+  /* comparison on phones: eight one-liners, table hidden */
   .vs{padding:56px 16px 8px}
-  .vs h2{font-size:0;margin-bottom:18px}
-  .vs h2::before{content:"What Simba does.";font-size:26px}
-  .vs-h{display:none}
-  .vs-r{display:block;padding:14px 16px}
-  .vs-r span{padding:0;min-height:0;display:flex}
-  .vs-r .vs-l{font-weight:600;font-size:15px;color:var(--ink)}
-  .vs-r span:nth-child(2){display:none}
-  .vs-r span:nth-child(3){background:transparent;margin:4px 0 0 30px;font-size:14.5px;font-weight:500;color:var(--navy)}
-  .vs-r span:nth-child(3)::before{display:none}
+  .vs > h2:first-child,.vs-tbl{display:none}
+  .vs-m-h{display:block;text-align:center;font-size:28px;margin:0 auto 18px}
+  .vs-m{display:block;list-style:none;margin:0;padding:6px 18px;background:#fff;border:1px solid var(--line);border-radius:14px}
+  .vs-m li{display:flex;align-items:center;gap:12px;padding:13px 0;font-size:15.5px;font-weight:500;color:var(--ink);border-bottom:1px solid var(--line);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .vs-m li:last-child{border-bottom:0}
+  .vs-m li::before{content:"";flex:none;width:18px;height:18px;background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231F8F4E' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'><path d='M5 12.5l4.5 4.5L19 7'/></svg>") no-repeat center/18px}
 }
 @media (max-width:560px){
   /* hero WhatsApp card: voice note on its own line, photos beneath */
@@ -2149,6 +2147,17 @@ footer{max-width:var(--max);margin:0 auto;padding:28px 24px 36px;display:flex;ju
 
 <div class="vs" id="compare">
   <h2>How Simba compares.</h2>
+  <h2 class="vs-m-h">What Simba does.</h2>
+  <ul class="vs-m">
+    <li>Answers every call, 24/7</li>
+    <li>Books jobs onto your board, your rules</li>
+    <li>Picks the right engineer for the job</li>
+    <li>Chases cold quotes, phone and WhatsApp</li>
+    <li>Books recurring services months ahead</li>
+    <li>Files site photos on the job</li>
+    <li>Writes the job report in your tone</li>
+    <li>Raises the invoice the same day</li>
+  </ul>
   <div class="vs-tbl">
     <div class="vs-h"><span></span><span>Before Simba</span><span>With Simba</span></div>
     <div class="vs-r"><span class="vs-l"><svg class="vs-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg>Answers after 5pm</span><span class="vs-x"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M7 7l10 10M17 7L7 17"/></svg>Voicemail</span><span class="vs-t"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg>Every call</span></div>
