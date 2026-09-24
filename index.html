@@ -1894,6 +1894,20 @@ footer{max-width:var(--max);margin:0 auto;padding:28px 24px 36px;display:flex;ju
   .vs-h span,.vs-r span{padding:8px 14px;min-height:40px;font-size:13.5px}
   .vs-r span:nth-child(3){border-radius:0}
 }
+@media (max-width:560px){
+  /* hero WhatsApp card: voice note on its own line, photos beneath */
+  .nc.wa .media{grid-template-columns:1fr 1fr}
+  .nc.wa .media > .vn{grid-column:1/-1}
+  /* inbound recording card and rows: wrap instead of chopping */
+  .rec-who b,.rec-row b{white-space:normal;overflow:visible;text-overflow:clip}
+  .rec-row b{font-size:13.5px;line-height:1.3}
+  /* outbound chain cards: wrap the name and the detail line */
+  .ch-txt b,.ch-txt small{white-space:normal;overflow:visible;text-overflow:clip}
+  .ch-card{align-items:flex-start}
+  .ch-tag{margin-top:2px}
+  /* job board: wide enough for the labels, scrolls sideways */
+  .sk-grid,.board2{min-width:600px}
+}
 </style>
 </head>
 <body>
