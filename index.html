@@ -1888,20 +1888,17 @@ footer{max-width:var(--max);margin:0 auto;padding:28px 24px 36px;display:flex;ju
   .sk-top b{flex:none}
   /* panels: no reserved height, so the board sits at the top of its card */
   .does-panel{min-height:0!important;justify-content:flex-start}
-  /* comparison table: label on its own line, before/with beneath */
-  .vs{padding:64px 16px 12px}
-  .vs-h{grid-template-columns:1fr 1fr}
-  .vs-h span:first-child{display:none}
-  .vs-r{grid-template-columns:1fr 1fr;padding-top:8px}
-  .vs-r .vs-l{grid-column:1/-1;min-height:0;padding:6px 14px 2px;font-weight:600}
-  .vs-h span,.vs-r span{padding:8px 14px;min-height:40px;font-size:13.5px}
-  /* no full-height column band on phones: tint only the With cell, as a chip */
-  .vs-h span:nth-child(3){background:transparent;color:var(--navy)}
-  .vs-h span{padding:8px 14px 6px}
-  .vs-r{padding:10px 6px 10px 0}
-  .vs-r span:nth-child(2){align-self:center}
-  .vs-r span:nth-child(3){background:transparent;border-radius:0;align-self:center;margin:0;padding:8px 14px;min-height:40px;font-weight:600}
-  .vs-r .vs-l{padding:0 14px 8px}
+  /* comparison table on phones: one clean list, no Before column */
+  .vs{padding:56px 16px 8px}
+  .vs h2{font-size:0;margin-bottom:18px}
+  .vs h2::before{content:"What Simba does.";font-size:26px}
+  .vs-h{display:none}
+  .vs-r{display:block;padding:14px 16px}
+  .vs-r span{padding:0;min-height:0;display:flex}
+  .vs-r .vs-l{font-weight:600;font-size:15px;color:var(--ink)}
+  .vs-r span:nth-child(2){display:none}
+  .vs-r span:nth-child(3){background:transparent;margin:4px 0 0 30px;font-size:14.5px;font-weight:500;color:var(--navy)}
+  .vs-r span:nth-child(3)::before{display:none}
 }
 @media (max-width:560px){
   /* hero WhatsApp card: voice note on its own line, photos beneath */
