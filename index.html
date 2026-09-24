@@ -2336,7 +2336,7 @@ footer{max-width:var(--max);margin:0 auto;padding:28px 24px 36px;display:flex;ju
     var rec = document.querySelector('[data-tail]'); if (!rec) return;
     var DUR = 72, FROM = 0.80, SWEEP = 2600, HOLD = 5200;
     var q = function(sel){ return rec.querySelector(sel); };
-    var played = q('.rec-bars.played'), ph = q('.rec-ph'), cur = q('[data-cur]'), rows = [q('.r1'), q('.r2'), q('.r3')];
+    var played = q('.rec-bars.played'), ph = q('.rec-ph'), cur = q('[data-cur]'), rows = [q('.r1'), q('.r2')];
     var timers = [], tick = null;
     function at(ms, fn){ timers.push(setTimeout(fn, ms)); }
     function fmt(n){ return Math.floor(n/60) + ':' + ('0' + (n%60)).slice(-2); }
