@@ -1932,6 +1932,14 @@ footer{max-width:var(--max);margin:0 auto;padding:28px 24px 36px;display:flex;ju
   /* coming-soon tabs were two fixed 200px columns, wider than the screen */
   .ptabs{grid-template-columns:1fr 1fr;gap:12px;padding:0 16px}
 }
+@media (max-width:560px){
+  /* logos: wrap into a centred grid instead of a side-scrolling strip */
+  .strip-in{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:18px 26px;overflow:visible;white-space:normal;padding:20px 16px 22px}
+  .strip-in span:first-child{flex:0 0 100%;text-align:center;font-size:13px;margin-bottom:2px}
+  .strip-in img{height:20px}
+  .strip-in img.sp{height:18px}
+  .strip-in img.wa{height:26px}
+}
 </style>
 </head>
 <body>
