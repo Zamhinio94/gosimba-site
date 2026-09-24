@@ -1900,7 +1900,7 @@ footer{max-width:var(--max);margin:0 auto;padding:28px 24px 36px;display:flex;ju
   .vs-h span{padding:8px 14px 6px}
   .vs-r{padding:10px 6px 10px 0}
   .vs-r span:nth-child(2){align-self:center}
-  .vs-r span:nth-child(3){background:var(--c1s);border-radius:10px;align-self:stretch;margin:0;padding:8px 12px;min-height:40px}
+  .vs-r span:nth-child(3){background:transparent;border-radius:0;align-self:center;margin:0;padding:8px 14px;min-height:40px;font-weight:600}
   .vs-r .vs-l{padding:0 14px 8px}
 }
 @media (max-width:560px){
@@ -1920,7 +1920,7 @@ footer{max-width:var(--max);margin:0 auto;padding:28px 24px 36px;display:flex;ju
   .nav-r .btn-pill,.sn-pill .btn-pill{padding:9px 14px;font-size:14px}
   .nav-in{padding:8px 6px 8px 14px}
   /* hero voice card: let the transcript wrap */
-  .lv-line{grid-template-columns:1fr;gap:2px;min-height:0}
+  .lv-line{grid-template-columns:1fr;gap:2px;min-height:4.2em}
   .lv-txt{white-space:normal;overflow:visible}
   .nc-b b{white-space:normal}
 }
@@ -2205,7 +2205,7 @@ footer{max-width:var(--max);margin:0 auto;padding:28px 24px 36px;display:flex;ju
     var active = document.querySelector('[data-tab2="' + i + '"] i');
     if (active) { void active.offsetWidth; active.style.transition = 'width ' + SOON_MS + 'ms linear'; active.style.width = '100%'; }
   };
-  var armSoon = function(i){ if (soonTimer) clearTimeout(soonTimer); soonTimer = setTimeout(function(){ pick2((parseInt(i, 10) + 1) % tabs2.length); }, SOON_MS); };
+  var armSoon = function(i){ if (soonTimer) clearTimeout(soonTimer); if (window.innerWidth <= 560) return; soonTimer = setTimeout(function(){ pick2((parseInt(i, 10) + 1) % tabs2.length); }, SOON_MS); };
   var pick2raw = pick2;
   pick2 = function(i){ pick2raw(i); runBar(i); armSoon(i); };
   if (tabs2.length) { runBar(0); armSoon(0); }
@@ -2434,7 +2434,7 @@ footer{max-width:var(--max);margin:0 auto;padding:28px 24px 36px;display:flex;ju
       });
     }
     window.addEventListener('resize', fit); window.addEventListener('load', fit);
-    setInterval(fit, 800); fit();
+    setTimeout(fit, 300); fit();
   })();
   document.querySelectorAll('.does').forEach(function(sec){
     var items = sec.querySelectorAll('[data-does]'), feeds = sec.querySelectorAll('[data-feed]'); if (!items.length) return;
@@ -2443,7 +2443,7 @@ footer{max-width:var(--max);margin:0 auto;padding:28px 24px 36px;display:flex;ju
       items.forEach(function(t){ var on = t.getAttribute('data-does') === String(i); t.classList.toggle('on', on); t.setAttribute('aria-selected', on ? 'true' : 'false'); });
       feeds.forEach(function(f){ var on = f.getAttribute('data-feed') === String(i); if (on) { f.classList.remove('on'); void f.offsetWidth; } f.classList.toggle('on', on); });
       window.dispatchEvent(new Event('resize'));
-      if (timer) clearTimeout(timer); timer = setTimeout(function(){ pick((parseInt(i, 10) + 1) % items.length); }, HOLD ? (HOLD[i] || MS) : MS);
+      if (timer) clearTimeout(timer); if (window.innerWidth <= 560) return; timer = setTimeout(function(){ pick((parseInt(i, 10) + 1) % items.length); }, HOLD ? (HOLD[i] || MS) : MS);
     };
     items.forEach(function(t){ t.addEventListener('click', function(){ pick(t.getAttribute('data-does')); }); });
     pick(0);
