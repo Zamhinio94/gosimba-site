@@ -1878,11 +1878,11 @@ footer{max-width:var(--max);margin:0 auto;padding:28px 24px 36px;display:flex;ju
   .fl-rules.big .fl-h .fl-n.soft{display:none}
   .fl-rules.big .fl-h{white-space:nowrap}
   /* job board: let the grid scroll sideways instead of crushing the cells */
-  .sk{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  /* job board: rendered at desktop width and scaled to fit (see fitBoards) */
+  .does-feed{position:relative;overflow:hidden}
+  .does-feed .sk{width:560px;transform-origin:top left}
   .sk-top{white-space:nowrap}
   .sk-top b{flex:none}
-  .sk-top small{overflow:hidden;text-overflow:ellipsis}
-  .sk-grid,.board2{min-width:520px}
   /* panels: no reserved height, so the board sits at the top of its card */
   .does-panel{min-height:0!important;justify-content:flex-start}
   /* comparison table: label on its own line, before/with beneath */
@@ -1905,8 +1905,15 @@ footer{max-width:var(--max);margin:0 auto;padding:28px 24px 36px;display:flex;ju
   .ch-txt b,.ch-txt small{white-space:normal;overflow:visible;text-overflow:clip}
   .ch-card{align-items:flex-start}
   .ch-tag{margin-top:2px}
-  /* job board: wide enough for the labels, scrolls sideways */
-  .sk-grid,.board2{min-width:600px}
+  /* sticky nav: smaller on phones */
+  .sn-pill .nav-in{padding:6px 6px 6px 14px;gap:10px}
+  .sn-pill .logo,.nav .logo{font-size:20px}
+  .nav-r .btn-pill,.sn-pill .btn-pill{padding:9px 14px;font-size:14px}
+  .nav-in{padding:8px 6px 8px 14px}
+  /* hero voice card: let the transcript wrap */
+  .lv-line{grid-template-columns:1fr;gap:2px;min-height:0}
+  .lv-txt{white-space:normal;overflow:visible}
+  .nc-b b{white-space:normal}
 }
 </style>
 </head>
@@ -2390,6 +2397,22 @@ footer{max-width:var(--max);margin:0 auto;padding:28px 24px 36px;display:flex;ju
       at(500 + SWEEP + 750 + HOLD, play);
     }
     play();
+  })();
+
+  (function(){
+    var W = 560;
+    function fit(){
+      var narrow = window.innerWidth <= 560;
+      document.querySelectorAll('#scheduling .does-feed').forEach(function(feed){
+        var sk = feed.querySelector('.sk'); if (!sk) return;
+        if (!narrow) { sk.style.transform = ''; feed.style.height = ''; return; }
+        var s = feed.clientWidth / W;
+        sk.style.transform = 'scale(' + s.toFixed(4) + ')';
+        feed.style.height = Math.ceil(sk.offsetHeight * s) + 'px';
+      });
+    }
+    window.addEventListener('resize', fit); window.addEventListener('load', fit);
+    setInterval(fit, 800); fit();
   })();
   document.querySelectorAll('.does').forEach(function(sec){
     var items = sec.querySelectorAll('[data-does]'), feeds = sec.querySelectorAll('[data-feed]'); if (!items.length) return;
