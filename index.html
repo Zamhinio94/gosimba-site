@@ -1955,6 +1955,25 @@ footer{max-width:var(--max);margin:0 auto;padding:28px 24px 36px;display:flex;ju
 .sk-c.late i b{font-weight:700}.sk-c.late i small{font-size:.9em;font-weight:500}
 .sk-c.cx .was:after{top:auto;bottom:auto;top:32%;right:auto;width:52px}
 .wa-txt .k-note{display:inline-block;margin-left:8px;font-size:12px;font-weight:600;color:#fff;background:rgba(255,255,255,.14);padding:3px 10px;border-radius:999px;vertical-align:1px;letter-spacing:0;text-transform:none}
+
+/* v58: sticky bar solid white, logo and button off the edges */
+.sn-pill{background:#fff;-webkit-backdrop-filter:none;backdrop-filter:none;border:1px solid rgba(20,25,60,.08);box-shadow:0 8px 28px rgba(20,25,60,.12)}
+.sn-pill .nav-in{padding:10px 10px 10px 24px}
+@media (max-width:900px){.sn-pill .nav-in{padding:7px 7px 7px 16px}}
+
+@media (max-width:560px){
+  /* v58: bigger two-line chips so the scaled board reads on a phone */
+  .does-feed .sk .sk-g,.does-feed .sk .sk-c{height:54px}
+  .does-feed .sk .sk-card,.does-feed .sk .sk-rec,.does-feed .sk .sk-c.bell,.does-feed .sk .sk-c.cx b{font-size:17.5px}
+  .does-feed .sk .sk-c.late i{font-size:15px}
+  .does-feed .sk .sk-card,.does-feed .sk .sk-c.bell .b1,.does-feed .sk .sk-c.bell .b2,.does-feed .sk .sk-c.cx b,.does-feed .sk .sk-rec{padding:0 10px}
+  .does-feed .sk .sk-rec svg{width:16px;height:16px}
+  .does-feed .sk .sk-c.bell .wab{width:24px;height:24px;right:-9px;top:-9px}.does-feed .sk .sk-c.bell .wab svg{width:13px;height:13px}
+  .does-feed .sk .sk-hd{font-size:15px}
+  .does-feed .sk .sk-msg{font-size:18px}
+  .does-feed .sk .sk-top small,.does-feed .sk .sk-top em,.does-feed .sk .sk-tog{font-size:16px}
+  .does-feed .sk .sk-top b{font-size:20px}
+}
 </style>
 </head>
 <body>
